@@ -1,0 +1,23 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+
+<div class="mail_container">
+    <h2>
+        Bonjour
+        {% if sexe.id == '1'%}
+            Mr
+        {% else %}
+            Mme
+        {% endif %}
+
+
+        {{nom}}
+    </h2>
+    <p>
+        Merci de confirmer l'enregistrement de votre compte en cliquant sur
+        <a href="https://{{ urlvalidation }}">ce lien</a>
+    </p>
+    <p>Cordialement,
+    </p>
+</br>
+L'équipe My Kiwi</p><img src="{{ img }}" width="100" border="0" alt="logo_myKiwi"></br></div>

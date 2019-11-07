@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="App\Entity\Profiles" table="profiles">
+    <indexes>
+      <index name="fk_evenements_idx" columns="id_evenements"/>
+      <index name="fk_contrats_idx" columns="id_contrats"/>
+      <index name="fk_duree_contrat_idx" columns="id_contrat_duree"/>
+      <index name="fk_echelons_idx" columns="id_echelons"/>
+      <index name="fk_niveaux_idx" columns="id_niveaux"/>
+      <index name="fk_societes_idx" columns="id_societes"/>
+      <index name="fk_coeficients_idx" columns="id_coeficients"/>
+      <index name="fk_diplomes_idx" columns="id_diplomes"/>
+      <index name="fk_idx" columns="id_sexe"/>
+      <index name="fk_avantages_idx" columns="id_avantages"/>
+      <index name="fk_situations_idx" columns="id_situations"/>
+      <index name="fk_secteurs_idx" columns="id_secteurs"/>
+      <index name="fk_postes_idx" columns="id_postes"/>
+    </indexes>
+    <id name="idprofile" type="integer" column="idProfile">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nom" type="string" column="nom" length="80" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="prenom" type="string" column="prenom" length="80" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="datenaissance" type="date" column="dateNaissance" nullable="false"/>
+    <field name="lieunaissance" type="string" column="lieuNaissance" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="adresse" type="string" column="adresse" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="telephonenumber" type="string" column="telephoneNumber" length="15" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="email" type="string" column="email" length="100" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="nbrchildren" type="integer" column="nbrChildren" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="ncartevitale" type="string" column="nCarteVitale" length="20" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="ncartepro" type="string" column="nCartePro" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="datedebut" type="datetime" column="dateDebut" nullable="true"/>
+    <field name="datefin" type="datetime" column="dateFin" nullable="true"/>
+    <field name="siteaffectation" type="string" column="siteAffectation" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="salairebrutmensuel" type="integer" column="salaireBrutMensuel" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="datedpae" type="datetime" column="dateDPAE" nullable="true"/>
+    <field name="matricule" type="string" column="matricule" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="motifsortie" type="text" column="motifSortie" length="65535" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="idAvantages" target-entity="Avantages" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_avantages" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idCoeficients" target-entity="Coeficients" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_coeficients" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idContrats" target-entity="Contrats" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_contrats" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idDiplomes" target-entity="Diplomes" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_diplomes" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idContratDuree" target-entity="Dureecontrats" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_contrat_duree" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEchelons" target-entity="Echelons" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_echelons" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idEvenements" target-entity="Evenements" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_evenements" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idNiveaux" target-entity="Niveaux" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_niveaux" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idPostes" target-entity="Postes" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_postes" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idSecteurs" target-entity="Secteurs" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_secteurs" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idSexe" target-entity="Sexes" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_sexe" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idSituations" target-entity="Situationfamilliales" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_situations" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idSocietes" target-entity="Societes" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_societes" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

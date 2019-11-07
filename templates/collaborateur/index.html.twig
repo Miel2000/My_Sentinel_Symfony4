@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CollaborateurController!
+{% endblock %}
+
+{% block body %}
+
+    <br>
+    <div class="container">
+        <div class="center">✅ Enregistrement Effectué</div>
+        <h2 class="text center">
+            Bonjour Mr
+            {{ nom }}
+
+
+        </h2>
+        <p>
+            Un mail pour confirmer votre adresse e-mail est envoyé à l'adresse
+            {{ email }}
+
+
+        </p>
+        <a href="{{path('homepage')}}">
+            Revenir à l'index
+        </a>
+    </div>
+{% endblock %}

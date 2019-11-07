@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Inscription
+{% endblock %}
+
+{% block body %}</br><div class="container">
+
+
+{{ form_row(form.dateNaissance, { 
+                'label': false
+         })}}
+
+{{ form_row(form.telephoneMobile, { 
+                'label': false,
+                'attr' : {
+            'placeholder': 'Telephone mobile'
+        }})}}
+
+{{ form_row(form.adresse, { 
+                'label': false,
+                'attr' : {
+            'placeholder': 'Adresse actuelle'
+        }})}}
+
+{{ form_row(form.idSituations)}}
+
+{{ form_row(form.nombreEnfant, { 
+                'label': false,
+                'attr' : {
+            'placeholder': 'Nombre d\enfant(s)'
+        }})}}
+
+{{ form_row(form.idDiplomes, { 
+                'label': 'Niveau d\'étude'           
+        })}}
+
+{{ form_row(form.numCarteVital, { 
+                'label': 'N° Carte Vital',
+                'attr' : {
+            'placeholder': '078 746 384 4837 398'
+        }
+               })}}
+{{ form_row(form.numCartePro, { 
+                'label': 'N° Carte Pro',
+                'attr' : {
+            'placeholder': 'XX 87 982398'
+                 }})}}
+
+
+
+</div>{% endblock %}

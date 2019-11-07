@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="App\Entity\RNationalite" table="r_nationalite">
+    <unique-constraints>
+      <unique-constraint name="alpha3" columns="alpha3"/>
+      <unique-constraint name="alpha2" columns="alpha2"/>
+      <unique-constraint name="code_unique" columns="code"/>
+    </unique-constraints>
+    <id name="id" type="smallint" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="code" type="integer" column="code" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="alpha2" type="string" column="alpha2" length="2" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="alpha3" type="string" column="alpha3" length="3" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="nomEnGb" type="string" column="nom_en_gb" length="45" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="nomFrFr" type="string" column="nom_fr_fr" length="45" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>
