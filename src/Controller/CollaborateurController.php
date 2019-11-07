@@ -47,7 +47,7 @@ class CollaborateurController extends AbstractController
 
     /**
      * 
-     * Function pour déléte un collaborateur
+     * Permet la suppression un collaborateur
      * 
      * @Route("/collaborateur/delete/{id}", name="collaborateur_delete")
      */

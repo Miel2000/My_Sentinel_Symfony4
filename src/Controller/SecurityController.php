@@ -11,22 +11,28 @@ use App\Entity\Collaborateur;
 use App\Entity\RDureeContrat;
 
 
-use App\Form\RegistrationType;
+use App\Form\FgtPasswordType;
 
+use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Notifications\ContactNotification;
+use App\Repository\CollaborateurRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
     
 class SecurityController extends AbstractController
 {
     /**
+     * Permet l'inscription d'un compte
+     * 
      * @Route("/inscription", name="security_registration")
      */
     public function registration(Request $request, ObjectManager $manager,UserPasswordEncoderInterface $encoder,  ContactNotification $notification){
@@ -65,6 +71,8 @@ class SecurityController extends AbstractController
 
    
     /**
+     * Permet la connexion à un compte 
+     * 
      * @Route("/connexion", name="security_login")
      */
 
@@ -77,15 +85,68 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * Permet de retrouvé un mot de passe oublié
+     * 
      * @Route("/forgot_password", name="security_forgot_password")
      */
 
-    public function forgot_password()
+    public function forgot_password( CollaborateurRepository $repo,
+                                     Request $request,
+                                     UserPasswordEncoderInterface $encoder,
+                                    \Swift_Mailer $mailer,
+                                    TokenGeneratorInterface $tokenGenerator
+                                    ): Response
     {
+       $form = $this->createForm(FgtPasswordType::class,  [
+           'method' => 'POST'
+       ]);
 
-        return $this->render('security/fgt_password.html.twig', [
+       $form->handleRequest($request);
+
+        if ($request->isMethod('POST')) {
+
+            $email = $request->request->get('email');
+
+            $entityManager = $this->getDoctrine()->getManager();
+      
+            $user = $repo->findOneByEmail($email);
            
-        ]);
+
+             /* @var $user Collaborateur */
+
+            if ($user === null) {
+                $this->addFlash('danger', 'Email Inconnu');
+                return $this->redirectToRoute('homepage');
+            }
+
+             $token = $tokenGenerator->generateToken();
+
+            try{
+                $user->setResetToken($token);
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->addFlash('warning', $e->getMessage());
+                return $this->redirectToRoute('homepage');
+            }
+
+            $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+
+            $message = (new \Swift_Message('Forgot Password'))
+                ->setFrom('fabien.orsn@gmail.com')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    "blablabla voici le token pour reseter votre mot de passe : " . $url,
+                    'text/html'
+                );
+
+            $mailer->send($message);
+
+            $this->addFlash('notice', 'Mail envoyé');
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('security/fgt_password.html.twig');
     }
 
     /**
